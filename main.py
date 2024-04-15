@@ -65,7 +65,7 @@ def main():
         model.load_state_dict(torch.load(f"{root_dir}/model.pt", map_location="cpu")['model_state_dict'])
         model = model.to(device)
         model.eval()
-        de_file_test = f"{root_dir}/test1.de-en.de"
+        de_file_test = f"{root_dir}/sentences.txt"
         with open(de_file_test) as file:
             test = file.readlines()
                 
@@ -73,7 +73,7 @@ def main():
         for text in tqdm(test):
             trans.append(model.translate(sp_model_de.encode(text), sp_model_en, device))
         
-        with open("file.txt", 'w') as output:
+        with open("answer.txt", 'w') as output:
             for row in trans:
                 output.write(str(row) + '\n')
         return 0
